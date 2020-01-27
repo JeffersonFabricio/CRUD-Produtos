@@ -7,5 +7,16 @@ router.post('/', function(req, res) {
     prod.save((err, prod) => {
         if (err)
             res.status(500).send();
+        else
+            res.status(200).send(prod);
     })
+});
+
+router.post('/', function(req, res) {
+    Product.find().exec((err, prod) => {
+        if (err)
+            res.status(500).send();
+        else
+            res.status(200).send(prod);
+    });
 });

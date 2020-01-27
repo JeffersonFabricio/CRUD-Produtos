@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 
 var orderSchema = new Schema({
     stock: Number,
-    total: Number,
     products: [
         {type: mongoose.Schema.Types.ObjectId, ref: 'Product'}
     ],

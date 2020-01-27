@@ -7,5 +7,16 @@ router.post('/', function(req, res) {
     order.save((err, order) => {
         if (err)
             res.status(500).send();
+        else
+            res.status(200).send(order);
     })
+});
+
+router.post('/', function(req, res) {
+    Order.find().exec((err, order) => {
+        if (err)
+            res.status(500).send();
+        else
+            res.status(200).send(order);
+    });
 });
