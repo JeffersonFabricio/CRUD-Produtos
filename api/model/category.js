@@ -5,4 +5,4 @@ var categorySchema = new Schema({
     name: String
 }, {versionKey: false});
 
-module.exports = mongoose("Category", userSchema);
+module.exports = mongoose.model("Category", userSchema);

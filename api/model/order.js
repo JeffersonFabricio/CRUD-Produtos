@@ -11,4 +11,4 @@ var orderSchema = new Schema({
     ]*/
 }, {versionKey: false});
 
-module.exports = mongoose("Order", orderSchema);
+module.exports = mongoose.model("Order", orderSchema);

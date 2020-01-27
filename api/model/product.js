@@ -10,4 +10,4 @@ var productSchema = new Schema({
     linkImg: String
 }, {versionKey: false});
 
-module.exports = mongoose("Product", productSchema);
+module.exports = mongoose.model("Product", productSchema);
