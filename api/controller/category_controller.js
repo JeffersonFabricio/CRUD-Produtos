@@ -20,3 +20,5 @@ router.post('/', function(req, res) {
             res.status(200).send(cat);
     });
 });
+
+module.exports = router;

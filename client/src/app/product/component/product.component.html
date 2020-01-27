@@ -5,7 +5,7 @@
   <mat-card-content>
     <div fxLayout="column" fxLayoutAlign="space-between">
       <mat-form-field>
-        <input matInput [(ngModel)]="productName">
+        <input matInput [(ngModel)]="productName" (keyup.enter)="save()">
         <mat-hint>Nome do produto</mat-hint>
       </mat-form-field>
       <div fxLayout="row" fxLayoutAlign="end end">
