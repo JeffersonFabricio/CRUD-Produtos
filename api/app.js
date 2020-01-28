@@ -20,6 +20,6 @@ mongoose.connect(
 );
 
 app.use('/products', product_controller);
-//app.use('/oders', order_controller);
+app.use('/oders', order_controller);
 
 app.listen(3000);

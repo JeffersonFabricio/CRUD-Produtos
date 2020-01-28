@@ -2,6 +2,8 @@ import { ProductService } from './../service/product.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import { MatSnackBar } from '@angular/material';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product',
@@ -15,6 +17,7 @@ export class ProductComponent implements OnInit {
   productPrice: number;
   productLinkProduct = '';
   productLinkImg = '';
+  private unsubscribe$: Subject<any> = new Subject();
   products: Product[] = [];
 
   productEdit: Product = null;
@@ -25,7 +28,9 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.productService.get().subscribe(
+    this.productService.get()
+    .pipe( takeUntil(this.unsubscribe$) )
+    .subscribe(
       (prods) => this.products = prods
     );
   }
@@ -77,7 +82,11 @@ export class ProductComponent implements OnInit {
   }
 
   delete(prod: Product) {
-    //to do
+    this.productService.del(prod)
+      .subscribe(
+        () => this.notify('Removido!'),
+        (err) => console.log(err)
+      );
   }
 
   cancel() {
@@ -94,6 +103,10 @@ export class ProductComponent implements OnInit {
 
   notify(msg: string) {
     this.snackBar.open(msg, 'Ok', {duration: 3000});
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
   }
 
 }

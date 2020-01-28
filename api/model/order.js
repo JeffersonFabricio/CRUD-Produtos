@@ -5,8 +5,8 @@ var orderSchema = new Schema({
     stock: Number,
     products: [
         {type: mongoose.Schema.Types.ObjectId, ref: 'Product'}
-    ],
-    /*user: [
+    ]/*,
+    user: [
         {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     ]*/
 }, {versionKey: false});

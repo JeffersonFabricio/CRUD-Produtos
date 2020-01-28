@@ -2,33 +2,32 @@ var express = require('express');
 var router = express.Router();
 var Product = require('./../model/product.js');
 
-router.post('/', function(req, res) {
+router.post('/', (req, res) => {
     let prod = new Product({ name: req.body.name });
     prod.save((err, prod) => {
         if (err)
             res.status(500).send(err);
         else
             res.status(200).send(prod);
-    })
+    });
 });
 
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
     Product.find().exec((err, prod) => {
         if (err)
             res.status(500).send(err);
         else
             res.status(200).send(prod);
-    })
+    });
 });
 
 router.delete('/:id', (req, res) => {
-    let id = req.params.id;
-    Product.deleteOne({_id: id}, (err) => {
+    Product.deleteOne({_id: req.params.id}, (err) => {
         if (err)
             res.status(500).send(err);
         else
             res.status(200).send({});
-    })
+    });
 });
 
 router.patch('/:id', (req, res) => {
@@ -47,7 +46,7 @@ router.patch('/:id', (req, res) => {
                 .then((product) => res.status(200).send(product))
                 .catch((e) => res.status(500).send(e));
         }
-    })
+    });
 });
 
 module.exports = router;
