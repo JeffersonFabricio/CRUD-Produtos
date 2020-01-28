@@ -1,6 +1,7 @@
 import { ProductService } from './../service/product.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-product',
@@ -17,8 +18,11 @@ export class ProductComponent implements OnInit {
   productLinkImg = '';
   products: Product[] = [];
 
+  productEdit: Product = null;
+
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -28,26 +32,51 @@ export class ProductComponent implements OnInit {
   }
 
   save() {
-    this.productService.add(
-      {
-        name: this.productName,
-        description: this.productDescription,
-        price: this.productPrice,
-        unit: this.productUnit,
-        linkProduct: this.productLinkProduct,
-        linkImg: this.productLinkImg
-      }
-    ).subscribe(
-      (product) => {
-        console.log(product);
-        this.clearFields();
-      },
-      (err) => console.error(err)
-    );
+
+    if ( this.productEdit ) {
+      this.productService.update(
+        {
+          name: this.productName,
+          description: this.productDescription,
+          price: this.productPrice,
+          unit: this.productUnit,
+          linkProduct: this.productLinkProduct,
+          linkImg: this.productLinkImg,
+          _id: this.productEdit._id
+        }
+      ).subscribe(
+        (prod) => {
+          this.notify('Atualizado');
+        },
+        (err) => {
+          this.notify('Erro');
+          console.error(err);
+        }
+      )
+    } else {
+      this.productService.add(
+        {
+          name: this.productName,
+          description: this.productDescription,
+          price: this.productPrice,
+          unit: this.productUnit,
+          linkProduct: this.productLinkProduct,
+          linkImg: this.productLinkImg
+        }
+      ).subscribe(
+        (product) => {
+          console.log(product);
+          this.clearFields();
+          this.notify('Adicionado');
+        },
+        (err) => console.error(err)
+      );
+    }
   }
 
   edit(prod: Product) {
-    //to do
+    this.productName = prod.name;
+    this.productEdit = prod;
   }
 
   delete(prod: Product) {
@@ -64,8 +93,11 @@ export class ProductComponent implements OnInit {
     this.productUnit = '';
     this.productLinkProduct = '';
     this.productLinkImg = '';
+    this.productEdit = null;
   }
 
-
+  notify (msg: string) {
+    this.snackBar.open(msg, 'Ok', {duration: 3000});
+  }
 
 }

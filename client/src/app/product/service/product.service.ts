@@ -33,4 +33,30 @@ export class ProductService {
     );
   }
 
+  del(prod: Product): Observable<any> {
+    return this.http.delete(`${this.url}/${prod._id}`)
+      .pipe(
+        tap(() => {
+          const products = this.productsSubject$.getValue();
+          const index = products.findIndex(p => p._id === prod._id);
+          if (index >= 0) {
+            products.splice(index, 1);
+          }
+        }
+      ));
+  }
+
+  update(prod: Product): Observable<Product> {
+    return this.http.patch<Product>(`${this.url}/${prod._id}`, prod)
+      .pipe(
+        tap((p) => {
+          const products = this.productsSubject$.getValue();
+          const index = products.findIndex(p => p._id === prod._id);
+          if (index >= 0) {
+            products[index].name = p.name;
+          }
+        })
+      );
+  }
+
 }
