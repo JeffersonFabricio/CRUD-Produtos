@@ -13,7 +13,6 @@ export class ProductComponent implements OnInit {
   productName = '';
   productDescription = '';
   productPrice: number;
-  productUnit = '';
   productLinkProduct = '';
   productLinkImg = '';
   products: Product[] = [];
@@ -39,7 +38,6 @@ export class ProductComponent implements OnInit {
           name: this.productName,
           description: this.productDescription,
           price: this.productPrice,
-          unit: this.productUnit,
           linkProduct: this.productLinkProduct,
           linkImg: this.productLinkImg,
           _id: this.productEdit._id
@@ -52,14 +50,13 @@ export class ProductComponent implements OnInit {
           this.notify('Erro');
           console.error(err);
         }
-      )
+      );
     } else {
       this.productService.add(
         {
           name: this.productName,
           description: this.productDescription,
           price: this.productPrice,
-          unit: this.productUnit,
           linkProduct: this.productLinkProduct,
           linkImg: this.productLinkImg
         }
@@ -90,13 +87,12 @@ export class ProductComponent implements OnInit {
   clearFields() {
     this.productName = '';
     this.productDescription = '';
-    this.productUnit = '';
     this.productLinkProduct = '';
     this.productLinkImg = '';
     this.productEdit = null;
   }
 
-  notify (msg: string) {
+  notify(msg: string) {
     this.snackBar.open(msg, 'Ok', {duration: 3000});
   }
 

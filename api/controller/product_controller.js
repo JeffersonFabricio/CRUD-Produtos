@@ -40,6 +40,9 @@ router.patch('/:id', (req, res) => {
         else {
             prod.name = req.body.name;
             prod.description = req.body.description;
+            prod.price = req.body.price;
+            prod.linkProduct = req.body.linkProduct;
+            prod.linkImg = req.body.linkImg;
             prod.save()
                 .then((product) => res.status(200).send(product))
                 .catch((e) => res.status(500).send(e));

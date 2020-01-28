@@ -5,7 +5,6 @@ var productSchema = new Schema({
     name: String,
     description: String,
     price: Number,
-    unit: String,
     linkProduct: String,
     linkImg: String
 }, {versionKey: false});

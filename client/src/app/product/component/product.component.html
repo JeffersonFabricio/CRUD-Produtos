@@ -1,12 +1,28 @@
 <mat-card fxFlex>
   <mat-card-title>
-    Produtos
+    Produto
   </mat-card-title>
   <mat-card-content>
     <div fxLayout="column" fxLayoutAlign="space-between">
+      <mat-form-field appearance="standard">
+        <mat-label>Nome do produto</mat-label>
+        <input matInput [(ngModel)]="productName" placeholder="Ex.: Creme Dental">
+      </mat-form-field>
       <mat-form-field>
-        <input matInput [(ngModel)]="productName" (keyup.enter)="save()">
-        <mat-hint>Nome do produto</mat-hint>
+        <mat-label>Descrição do produto</mat-label>
+        <input matInput [(ngModel)]="productDescription">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Preço do produto</mat-label>
+        <input matInput [(ngModel)]="productPrice">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Link do Produto</mat-label>
+        <input matInput [(ngModel)]="productLinkProduct">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="productLinkImg">
+        <mat-hint>Link da imagem do produto</mat-hint>
       </mat-form-field>
       <div fxLayout="row" fxLayoutAlign="end end">
         <button mat-button color="primary" (click)="save()">Salvar</button>
