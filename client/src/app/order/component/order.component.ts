@@ -59,6 +59,7 @@ export class OrderComponent implements OnInit {
           (err) => this.notify(err.error.msg)
         );
     }
+    this.clearFields();
   }
 
   delete(ord: Order) {

@@ -2,7 +2,7 @@ import { Product } from './../product';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,8 @@ export class ProductService {
   get(): Observable<Product[]> {
     if (!this.loaded) {
       this.http.get<Product[]>(this.url)
-        .pipe(tap((prods) => console.log(prods)))
+        .pipe(tap((prods) => console.log(prods)),
+          delay(1000))
         .subscribe(this.productsSubject$);
       this.loaded = true;
     }

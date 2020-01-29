@@ -38,8 +38,7 @@ export class OrderService {
           }
           return orders;
         }),
-        tap((orders) => console.log(orders)),
-        delay(1000)
+        tap((orders) => console.log(orders))
       )
       .subscribe(this.ordersSubject$);
       this.loaded = true;
