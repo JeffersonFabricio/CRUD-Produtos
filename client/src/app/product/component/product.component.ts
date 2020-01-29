@@ -102,6 +102,7 @@ export class ProductComponent implements OnInit {
   clearFields() {
     this.productForm.controls.productName.setValue('');
     this.productForm.controls.productDescription.setValue('');
+    this.productForm.controls.productPrice.setValue(0);
     this.productForm.controls.productLinkProduct.setValue('');
     this.productForm.controls.productLinkImg.setValue('');
     this.productEdit = null;
