@@ -4,7 +4,8 @@
   </mat-card-title>
 
   <mat-card-content>
-    <form [formGroup]="productForm" (ngSubmit)="save()" fxLayout="column" fxLayoutAlign="space-between">
+    <form [formGroup]="productForm" (ngSubmit)="save()"
+      fxLayout="column" fxLayoutAlign="space-between" #form="ngForm">
 
       <mat-form-field appearance="standard">
         <mat-label>Nome do produto</mat-label>

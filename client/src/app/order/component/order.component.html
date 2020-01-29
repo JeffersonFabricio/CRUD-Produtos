@@ -11,7 +11,7 @@
       <mat-select placeholder="Produtos" formControlName="products" multiple>
         <mat-select-trigger>
           {{orderForm.value.products ? orderForm.value.products[0]?.name : ''}}
-          <span *ngIf="orderForm.value.products.length > 1" class="additional-selection">
+          <span *ngIf="orderForm.value.products?.length > 1" class="additional-selection">
             (+{{orderForm.value.products.length - 1}} {{orderForm.value.products.length === 2 ? 'outro' : 'outros'}})
           </span>
         </mat-select-trigger>
@@ -21,7 +21,7 @@
 
     <div fxLayout="row" fxLayoutAlign="end end">
       <button mat-button color="primary" fxFlex="10" type="submit">Salvar</button>
-      <button mat-button color="warn" fxFlex="10"  type="cancel">Cancelar</button>
+      <button mat-button color="warn" fxFlex="10"  (click)="cancel()">Cancelar</button>
     </div>
 
     </form>

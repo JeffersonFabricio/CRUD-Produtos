@@ -69,6 +69,14 @@ export class OrderComponent implements OnInit {
       );
   }
 
+  cancel() {
+    this.clearFields();
+  }
+
+  clearFields() {
+    this.orderForm.controls.products.setValue(null);
+  }
+
   notify(msg: string) {
     this.snackBar.open(msg, 'Ok', {duration: 3000});
   }

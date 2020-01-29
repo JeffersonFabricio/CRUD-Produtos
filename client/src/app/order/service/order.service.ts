@@ -2,7 +2,7 @@ import { Order } from './../order';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { tap, map, filter } from 'rxjs/operators';
+import { tap, map, filter, delay } from 'rxjs/operators';
 import { ProductService } from '../../product/service/product.service';
 import { Product } from '../../product/product';
 
@@ -38,7 +38,8 @@ export class OrderService {
           }
           return orders;
         }),
-        tap((orders) => console.log(orders))
+        tap((orders) => console.log(orders)),
+        delay(1000)
       )
       .subscribe(this.ordersSubject$);
       this.loaded = true;

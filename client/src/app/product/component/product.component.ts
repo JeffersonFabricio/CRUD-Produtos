@@ -1,6 +1,6 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { ProductService } from './../service/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Product } from '../product';
 import { MatSnackBar } from '@angular/material';
 import { Subject } from 'rxjs';
@@ -25,6 +25,8 @@ export class ProductComponent implements OnInit {
     productLinkProduct: ['', [Validators.required]],
     productLinkImg: ['', [Validators.required]]
   });
+
+  @ViewChild('form', {static: false}) form: NgForm;
 
   productEdit: Product = null;
 
@@ -83,10 +85,10 @@ export class ProductComponent implements OnInit {
         (err) => console.error(err)
       );
     }
+    this.resetForm();
   }
 
   edit(prod: Product) {
-    //this.productName = prod.name;
     this.productEdit = prod;
   }
 
@@ -98,8 +100,8 @@ export class ProductComponent implements OnInit {
       );
   }
 
-  cancel() {
-    //to do
+  resetForm() {
+    this.form.resetForm();
   }
 
   clearFields() {
