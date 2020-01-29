@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { OrderService } from '../service/order.service';
+import { ProductService } from '../../product/service/product.service';
+import { Order } from '../order';
+import { Product } from '../../product/product';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-order',
@@ -9,9 +17,36 @@ export class OrderComponent implements OnInit {
 
   orderStock = '';
 
-  constructor() { }
+  private unsubscribe$: Subject<any> = new Subject<any>();
+
+  orderForm: FormGroup = this.fb.group({
+    _id: [null],
+    stock: [0, [Validators.required, Validators.min(0)]],
+    products: [[], [Validators.required]]
+  });
+
+  orders: Order[] = [];
+  products: Product[] = [];
+
+  constructor(
+    private orderService: OrderService,
+    private productService: ProductService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
+
+    this.orderService.get()
+      .pipe( takeUntil(this.unsubscribe$))
+      .subscribe((ords) => this.orders = ords);
+
+    this.productService.get()
+      .pipe( takeUntil(this.unsubscribe$))
+      .subscribe((prods) => this.products = prods);
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
   }
 
 }
