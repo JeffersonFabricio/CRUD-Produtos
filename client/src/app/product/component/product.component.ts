@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from './../service/product.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
@@ -12,18 +13,23 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ProductComponent implements OnInit {
 
-  productName = '';
-  productDescription = '';
-  productPrice: number;
-  productLinkProduct = '';
-  productLinkImg = '';
   private unsubscribe$: Subject<any> = new Subject();
   products: Product[] = [];
+
+  productForm: FormGroup = this.fb.group({
+    _id: [null],
+    productName: ['', [Validators.required, Validators.min(0)]],
+    productDescription: ['', [Validators.required, Validators.min(0)]],
+    productPrice: [0, [Validators.required, Validators.min(0)]],
+    productLinkProduct: ['', [Validators.required]],
+    productLinkImg: ['', [Validators.required]]
+  });
 
   productEdit: Product = null;
 
   constructor(
     private productService: ProductService,
+    private fb: FormBuilder,
     private snackBar: MatSnackBar
   ) { }
 
@@ -40,11 +46,11 @@ export class ProductComponent implements OnInit {
     if ( this.productEdit ) {
       this.productService.update(
         {
-          name: this.productName,
-          description: this.productDescription,
-          price: this.productPrice,
-          linkProduct: this.productLinkProduct,
-          linkImg: this.productLinkImg,
+          name: this.productForm.controls.productName.value,
+          description: this.productForm.controls.productDescription.value,
+          price: this.productForm.controls.productPrice.value,
+          linkProduct: this.productForm.controls.productLinkProduct.value,
+          linkImg: this.productForm.controls.productLinkImg.value,
           _id: this.productEdit._id
         }
       ).subscribe(
@@ -59,11 +65,11 @@ export class ProductComponent implements OnInit {
     } else {
       this.productService.add(
         {
-          name: this.productName,
-          description: this.productDescription,
-          price: this.productPrice,
-          linkProduct: this.productLinkProduct,
-          linkImg: this.productLinkImg
+          name: this.productForm.controls.productName.value,
+          description: this.productForm.controls.productDescription.value,
+          price: this.productForm.controls.productPrice.value,
+          linkProduct: this.productForm.controls.productLinkProduct.value,
+          linkImg: this.productForm.controls.productLinkImg.value
         }
       ).subscribe(
         (product) => {
@@ -77,7 +83,7 @@ export class ProductComponent implements OnInit {
   }
 
   edit(prod: Product) {
-    this.productName = prod.name;
+    //this.productName = prod.name;
     this.productEdit = prod;
   }
 
@@ -94,10 +100,10 @@ export class ProductComponent implements OnInit {
   }
 
   clearFields() {
-    this.productName = '';
-    this.productDescription = '';
-    this.productLinkProduct = '';
-    this.productLinkImg = '';
+    this.productForm.controls.productName.setValue('');
+    this.productForm.controls.productDescription.setValue('');
+    this.productForm.controls.productLinkProduct.setValue('');
+    this.productForm.controls.productLinkImg.setValue('');
     this.productEdit = null;
   }
 

@@ -3,7 +3,15 @@ var router = express.Router();
 var Product = require('./../model/product.js');
 
 router.post('/', (req, res) => {
-    let prod = new Product({ name: req.body.name });
+    let prod = new Product(
+        {
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+            linkProduct: req.body.linkProduct,
+            linkImg: req.body.linkImg
+        }
+    );
     prod.save((err, prod) => {
         if (err)
             res.status(500).send(err);

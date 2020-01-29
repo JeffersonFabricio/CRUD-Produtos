@@ -2,37 +2,46 @@
   <mat-card-title>
     Produto
   </mat-card-title>
+
   <mat-card-content>
-    <div fxLayout="column" fxLayoutAlign="space-between">
+    <form [formGroup]="productForm" (ngSubmit)="save()" fxLayout="column" fxLayoutAlign="space-between">
+
       <mat-form-field appearance="standard">
         <mat-label>Nome do produto</mat-label>
-        <input matInput [(ngModel)]="productName" placeholder="Ex.: Creme Dental">
+        <input matInput formControlName="productName" placeholder="Ex.: Creme Dental">
       </mat-form-field>
+
       <mat-form-field>
         <mat-label>Descrição do produto</mat-label>
-        <input matInput [(ngModel)]="productDescription">
+        <input matInput formControlName="productDescription">
       </mat-form-field>
+
       <mat-form-field>
         <mat-label>Preço do produto</mat-label>
-        <input matInput [(ngModel)]="productPrice">
+        <input matInput formControlName="productPrice" type="number">
       </mat-form-field>
+
       <mat-form-field>
         <mat-label>Link do Produto</mat-label>
-        <input matInput [(ngModel)]="productLinkProduct">
+        <input matInput formControlName="productLinkProduct">
       </mat-form-field>
+
       <mat-form-field>
-        <input matInput [(ngModel)]="productLinkImg">
-        <mat-hint>Link da imagem do produto</mat-hint>
+        <mat-label>Link da imagem do Produto</mat-label>
+        <input matInput formControlName="productLinkImg">
       </mat-form-field>
+
       <div fxLayout="row" fxLayoutAlign="end end">
-        <button mat-button color="primary" (click)="save()">Salvar</button>
+        <button mat-button color="primary" type="submit">Salvar</button>
         <button mat-button color="warn" (click)="cancel()">Cancelar</button>
       </div>
-    </div>
+
+    </form>
+
     <mat-list>
       <h3 mat-subheader>Produtos</h3>
       <mat-list-item *ngFor="let prod of products">
-        <mat-icon mat-list-icon>folder</mat-icon>
+        <mat-icon mat-list-icon>add_shopping_cart</mat-icon>
         <h4 mat-line>{{prod.name}}</h4>
         <button mat-icon-button color="accent" (click)="delete(prod)">
           <mat-icon>delete</mat-icon>
@@ -42,5 +51,6 @@
         </button>
       </mat-list-item>
     </mat-list>
+
   </mat-card-content>
 </mat-card>

@@ -45,6 +45,10 @@ export class OrderComponent implements OnInit {
       .subscribe((prods) => this.products = prods);
   }
 
+  save() {
+
+  }
+
   ngOnDestroy() {
     this.unsubscribe$.next();
   }
