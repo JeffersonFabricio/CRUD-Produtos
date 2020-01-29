@@ -2,7 +2,7 @@ import { Order } from './../order';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, filter } from 'rxjs/operators';
 import { ProductService } from '../../product/service/product.service';
 import { Product } from '../../product/product';
 
@@ -25,8 +25,10 @@ export class OrderService {
     if (!this.loaded) {
       combineLatest(
         this.http.get<Order[]>(this.url),
-        this.productService.get()
-      ).pipe(
+        this.productService.get())
+        .pipe(
+        tap(([orders, products]) => console.log(orders, products)),
+        filter(([orders, products]) => orders != null && products != null),
         map(([orders, products]) => {
           for (const ords of orders) {
             const ids = (ords.products as string[]);

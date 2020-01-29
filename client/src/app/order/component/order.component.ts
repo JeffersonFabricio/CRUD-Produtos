@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -23,27 +24,53 @@ export class OrderComponent implements OnInit {
   });
 
   orders: Order[] = [];
-  products: Product[] = [];
+  prods: Product[] = [];
 
   constructor(
     private orderService: OrderService,
     private productService: ProductService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
 
     this.orderService.get()
-      .pipe( takeUntil(this.unsubscribe$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((ords) => this.orders = ords);
 
     this.productService.get()
-      .pipe( takeUntil(this.unsubscribe$))
-      .subscribe((prods) => this.products = prods);
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((prods) => this.prods = prods);
   }
 
   save() {
+    const data = this.orderForm.value;
+    if (data._id) {
+      this.orderService.update(data)
+        .subscribe(
+          () => this.notify('Atualizado'),
+          (err) => this.notify(err)
+        );
+    } else {
+      this.orderService.add(data)
+        .subscribe(
+          () => this.notify('Salvo'),
+          (err) => this.notify(err)
+        );
+    }
+  }
 
+  delete(ord: Order) {
+    this.orderService.del(ord)
+      .subscribe(
+        () => this.notify('Deletado!'),
+        (err) => this.notify(err)
+      );
+  }
+
+  notify(msg: string) {
+    this.snackBar.open(msg, 'Ok', {duration: 3000});
   }
 
   ngOnDestroy() {
