@@ -15,13 +15,10 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class OrderComponent implements OnInit {
 
-  orderStock = '';
-
   private unsubscribe$: Subject<any> = new Subject<any>();
 
   orderForm: FormGroup = this.fb.group({
     _id: [null],
-    stock: [0, [Validators.required, Validators.min(0)]],
     products: [[], [Validators.required]]
   });
 

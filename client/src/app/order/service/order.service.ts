@@ -28,7 +28,7 @@ export class OrderService {
         this.productService.get()
       ).pipe(
         map(([orders, products]) => {
-          for(const ords of orders){
+          for (const ords of orders) {
             const ids = (ords.products as string[]);
             ords.products = ids.map(
               (id) => products.find(prod => prod._id === id)

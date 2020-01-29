@@ -21,6 +21,7 @@ export class ProductComponent implements OnInit {
     productName: ['', [Validators.required, Validators.min(0)]],
     productDescription: ['', [Validators.required, Validators.min(0)]],
     productPrice: [0, [Validators.required, Validators.min(0)]],
+    productStock: [0, [Validators.required, Validators.min(0)]],
     productLinkProduct: ['', [Validators.required]],
     productLinkImg: ['', [Validators.required]]
   });
@@ -49,6 +50,7 @@ export class ProductComponent implements OnInit {
           name: this.productForm.controls.productName.value,
           description: this.productForm.controls.productDescription.value,
           price: this.productForm.controls.productPrice.value,
+          stock: this.productForm.controls.productStock.value,
           linkProduct: this.productForm.controls.productLinkProduct.value,
           linkImg: this.productForm.controls.productLinkImg.value,
           _id: this.productEdit._id
@@ -68,6 +70,7 @@ export class ProductComponent implements OnInit {
           name: this.productForm.controls.productName.value,
           description: this.productForm.controls.productDescription.value,
           price: this.productForm.controls.productPrice.value,
+          stock: this.productForm.controls.productStock.value,
           linkProduct: this.productForm.controls.productLinkProduct.value,
           linkImg: this.productForm.controls.productLinkImg.value
         }
@@ -103,6 +106,7 @@ export class ProductComponent implements OnInit {
     this.productForm.controls.productName.setValue('');
     this.productForm.controls.productDescription.setValue('');
     this.productForm.controls.productPrice.setValue(0);
+    this.productForm.controls.productStock.setValue(0);
     this.productForm.controls.productLinkProduct.setValue('');
     this.productForm.controls.productLinkImg.setValue('');
     this.productEdit = null;

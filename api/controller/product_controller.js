@@ -8,6 +8,7 @@ router.post('/', (req, res) => {
             name: req.body.name,
             description: req.body.description,
             price: req.body.price,
+            stock: req.body.stock,
             linkProduct: req.body.linkProduct,
             linkImg: req.body.linkImg
         }
@@ -48,6 +49,7 @@ router.patch('/:id', (req, res) => {
             prod.name = req.body.name;
             prod.description = req.body.description;
             prod.price = req.body.price;
+            prod.stock = req.body.stock;
             prod.linkProduct = req.body.linkProduct;
             prod.linkImg = req.body.linkImg;
             prod.save()

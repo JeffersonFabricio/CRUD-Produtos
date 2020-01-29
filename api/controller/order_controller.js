@@ -4,7 +4,6 @@ var Order = require('./../model/order.js');
 
 router.post('/', (req, res) => {
     let order = new Order({ 
-        stock: req.body.stock,
         products: req.body.products
      });
     order.save((err, order) => {
@@ -40,7 +39,6 @@ router.patch('/:id', (req, res) => {
         else if (!order)
             res.status(404).send({});
         else {
-            order.stock = req.body.stock;
             order.products = req.body.products;
             order.save()
                 .then((ord) => res.status(200).send(ord))
