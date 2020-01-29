@@ -50,13 +50,13 @@ export class OrderComponent implements OnInit {
       this.orderService.update(data)
         .subscribe(
           () => this.notify('Atualizado'),
-          (err) => this.notify(err)
+          (err) => this.notify(err.error.msg)
         );
     } else {
       this.orderService.add(data)
         .subscribe(
           () => this.notify('Salvo'),
-          (err) => this.notify(err)
+          (err) => this.notify(err.error.msg)
         );
     }
   }
@@ -65,7 +65,7 @@ export class OrderComponent implements OnInit {
     this.orderService.del(ord)
       .subscribe(
         () => this.notify('Deletado!'),
-        (err) => this.notify(err)
+        (err) => this.notify(err.error.msg)
       );
   }
 

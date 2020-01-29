@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Product = require('./../model/product.js');
+var Order = require('./../model/order.js');
 
 router.post('/', (req, res) => {
     let prod = new Product(
@@ -30,13 +31,20 @@ router.get('/', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
-    Product.deleteOne({_id: req.params.id}, (err) => {
-        if (err)
-            res.status(500).send(err);
-        else
+router.delete('/:id', async (req, res) => {
+    try {
+        const ords = await Order.find({orders: id}).exec();
+        if (ords.length > 0) {
+            res.status(500).send({
+                msg: 'Você não pode remover um produto que pertence a uma cotação.'
+            }) 
+        } else {
+            await Product.deleteOne({_id: req.params.id});
             res.status(200).send({});
-    });
+        }
+    } catch (error) {
+       res.status(500).send({msg: 'Internal error.', error: err});
+    }
 });
 
 router.patch('/:id', (req, res) => {

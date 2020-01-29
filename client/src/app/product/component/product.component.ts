@@ -63,7 +63,7 @@ export class ProductComponent implements OnInit {
         },
         (err) => {
           this.notify('Erro');
-          console.error(err);
+          this.notify(err.error.msg);
         }
       );
     } else {
@@ -82,7 +82,7 @@ export class ProductComponent implements OnInit {
           this.clearFields();
           this.notify('Adicionado');
         },
-        (err) => console.error(err)
+        (err) => this.notify(err.error.msg)
       );
     }
     this.resetForm();
@@ -96,7 +96,7 @@ export class ProductComponent implements OnInit {
     this.productService.del(prod)
       .subscribe(
         () => this.notify('Removido!'),
-        (err) => console.log(err)
+        (err) => this.notify(err.error.msg)
       );
   }
 
